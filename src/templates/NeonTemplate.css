@@ -1,0 +1,359 @@
+.tmpl-neon {
+  background: #0a0a0a;
+  color: #e0e0e0;
+  font-family: 'Courier New', 'Fira Code', monospace;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Scan Lines */
+.neon-scanlines {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    180deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.05) 2px,
+    rgba(0, 0, 0, 0.05) 4px
+  );
+  pointer-events: none;
+  z-index: 999;
+}
+
+/* Color System */
+.neon-bracket {
+  color: #FF00FF;
+  text-shadow: 0 0 10px #FF00FF, 0 0 20px #FF00FF;
+}
+
+/* Hero */
+.tmpl-neon-hero {
+  text-align: center;
+  padding: 80px 40px 60px;
+  position: relative;
+}
+
+.neon-glow-border {
+  display: inline-block;
+  padding: 4px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FF00FF, #00FFFF);
+  box-shadow: 0 0 30px rgba(255, 0, 255, 0.3), 0 0 60px rgba(0, 255, 255, 0.15);
+  margin-bottom: 24px;
+}
+
+.tmpl-neon-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.tmpl-neon-avatar-placeholder {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #0a0a0a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  color: #FF00FF;
+  font-weight: bold;
+  text-shadow: 0 0 20px #FF00FF;
+}
+
+.tmpl-neon-name {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.tmpl-neon-title {
+  font-size: 1.1rem;
+  color: #00FFFF;
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+  letter-spacing: 2px;
+}
+
+.tmpl-neon-location {
+  font-size: 0.88rem;
+  color: #888;
+  margin-top: 10px;
+}
+
+.tmpl-neon-bio {
+  max-width: 600px;
+  margin: 20px auto 0;
+  font-size: 0.92rem;
+  color: #aaa;
+  line-height: 1.7;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.tmpl-neon-socials {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.neon-social-btn {
+  color: #FF00FF;
+  text-decoration: none;
+  font-size: 0.82rem;
+  padding: 6px 16px;
+  border: 1px solid rgba(255, 0, 255, 0.3);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  text-shadow: 0 0 5px rgba(255, 0, 255, 0.3);
+}
+
+.neon-social-btn:hover {
+  background: rgba(255, 0, 255, 0.1);
+  border-color: #FF00FF;
+  box-shadow: 0 0 15px rgba(255, 0, 255, 0.2);
+}
+
+/* Sections */
+.tmpl-neon-section {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px;
+}
+
+.tmpl-neon-section-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 4px;
+  margin-bottom: 32px;
+  text-align: center;
+  color: #fff;
+}
+
+/* Neon Card */
+.neon-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 0, 255, 0.15);
+  border-radius: 8px;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.neon-card:hover {
+  border-color: rgba(255, 0, 255, 0.4);
+  box-shadow: 0 0 20px rgba(255, 0, 255, 0.08);
+}
+
+.neon-card-glow {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #FF00FF, #00FFFF, transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.neon-card:hover .neon-card-glow {
+  opacity: 1;
+}
+
+.neon-card h4 {
+  font-size: 1.05rem;
+  color: #fff;
+  margin-bottom: 6px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.neon-sub {
+  font-size: 0.88rem;
+  color: #888;
+}
+
+.neon-meta, .neon-meta-row {
+  font-size: 0.82rem;
+  color: #666;
+  margin-top: 6px;
+}
+
+.neon-meta-row {
+  display: flex;
+  gap: 16px;
+}
+
+.neon-desc {
+  font-size: 0.88rem;
+  color: #aaa;
+  margin-top: 10px;
+  line-height: 1.6;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Skills */
+.tmpl-neon-skills {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.neon-skill-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 0, 255, 0.1);
+  border-radius: 6px;
+  padding: 16px;
+}
+
+.neon-skill-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 0.88rem;
+}
+
+.neon-pct {
+  color: #00FFFF;
+  text-shadow: 0 0 5px rgba(0, 255, 255, 0.4);
+}
+
+.neon-skill-bar {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.neon-skill-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #FF00FF, #00FFFF);
+  box-shadow: 0 0 8px rgba(255, 0, 255, 0.4);
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+
+/* Items */
+.tmpl-neon-items {
+  display: grid;
+  gap: 16px;
+}
+
+/* Projects */
+.tmpl-neon-projects {
+  display: grid;
+  gap: 20px;
+}
+
+.neon-project {
+  padding: 0;
+  overflow: hidden;
+}
+
+.neon-project-img {
+  height: 200px;
+  overflow: hidden;
+}
+
+.neon-project-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(1.2);
+}
+
+.neon-project-body {
+  padding: 24px;
+}
+
+.neon-project-body h3 {
+  font-size: 1.15rem;
+  color: #fff;
+  margin-bottom: 10px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.neon-project-body p {
+  font-size: 0.88rem;
+  color: #aaa;
+  line-height: 1.6;
+  margin-bottom: 12px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.neon-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.neon-tag {
+  font-size: 0.72rem;
+  padding: 3px 12px;
+  border: 1px solid rgba(0, 255, 255, 0.25);
+  border-radius: 3px;
+  color: #00FFFF;
+  letter-spacing: 1px;
+}
+
+.neon-link {
+  color: #FF00FF;
+  text-decoration: none;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  text-shadow: 0 0 5px rgba(255, 0, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.neon-link:hover {
+  color: #00FFFF;
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+/* Certifications */
+.tmpl-neon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.neon-cert-card {
+  text-align: center;
+}
+
+.neon-cert-emoji {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 12px;
+}
+
+/* Contact */
+.neon-contact {
+  text-align: center;
+}
+
+.neon-contact p {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Footer */
+.tmpl-neon-footer {
+  text-align: center;
+  padding: 40px;
+  color: #444;
+  font-size: 0.82rem;
+}

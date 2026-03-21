@@ -1,0 +1,438 @@
+.tmpl-elegant {
+  background: #111111;
+  color: #e8e8e8;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  min-height: 100vh;
+}
+
+/* Hero */
+.tmpl-elegant-hero {
+  text-align: center;
+  padding: 80px 40px 60px;
+  position: relative;
+  background: linear-gradient(180deg, #1a1a1a 0%, #111111 100%);
+}
+
+.elegant-decorative-line {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(180deg, #D4AF37, transparent);
+}
+
+.tmpl-elegant-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #D4AF37;
+  box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+  margin-bottom: 24px;
+}
+
+.tmpl-elegant-avatar-placeholder {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #D4AF37, #B8860B);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  color: #111;
+  margin: 0 auto 24px;
+  font-weight: bold;
+}
+
+.tmpl-elegant-name {
+  font-size: 2.4rem;
+  font-weight: 400;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #fff;
+  margin-bottom: 12px;
+}
+
+.elegant-title-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin: 16px 0;
+}
+
+.elegant-title-divider::before,
+.elegant-title-divider::after {
+  content: '';
+  width: 60px;
+  height: 1px;
+  background: #D4AF37;
+}
+
+.elegant-diamond {
+  color: #D4AF37;
+  font-size: 0.7rem;
+}
+
+.tmpl-elegant-title {
+  font-size: 1.1rem;
+  color: #D4AF37;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.tmpl-elegant-location {
+  font-size: 0.9rem;
+  color: #888;
+  margin-top: 12px;
+  font-style: italic;
+}
+
+.tmpl-elegant-bio {
+  max-width: 600px;
+  margin: 20px auto 0;
+  font-size: 0.95rem;
+  color: #aaa;
+  line-height: 1.7;
+  font-style: italic;
+}
+
+.tmpl-elegant-socials {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 28px;
+  flex-wrap: wrap;
+}
+
+.elegant-social {
+  color: #D4AF37;
+  text-decoration: none;
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.elegant-social:hover {
+  background: rgba(212, 175, 55, 0.1);
+  border-color: #D4AF37;
+}
+
+/* Sections */
+.tmpl-elegant-section {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 50px 40px;
+}
+
+.tmpl-elegant-section-title {
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 400;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #D4AF37;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.tmpl-elegant-section-title span {
+  background: #111111;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.tmpl-elegant-section-title::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(212, 175, 55, 0.25);
+}
+
+/* Skills */
+.tmpl-elegant-skills {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.tmpl-elegant-skill {
+  padding: 16px 0;
+}
+
+.elegant-skill-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.elegant-skill-pct {
+  color: #D4AF37;
+}
+
+.elegant-skill-track {
+  height: 2px;
+  background: rgba(212, 175, 55, 0.15);
+  border-radius: 1px;
+}
+
+.elegant-skill-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #D4AF37, #F0D060);
+  border-radius: 1px;
+  transition: width 0.5s ease;
+}
+
+/* Timeline */
+.tmpl-elegant-timeline {
+  position: relative;
+  padding-left: 30px;
+}
+
+.tmpl-elegant-timeline::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(212, 175, 55, 0.2);
+}
+
+.elegant-timeline-item {
+  position: relative;
+  margin-bottom: 32px;
+}
+
+.elegant-timeline-marker {
+  position: absolute;
+  left: -30px;
+  top: 2px;
+  color: #D4AF37;
+  font-size: 0.6rem;
+}
+
+.elegant-timeline-content h4 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  margin-bottom: 4px;
+}
+
+.elegant-muted {
+  color: #777;
+  font-weight: 400;
+}
+
+.elegant-duration, .elegant-location-sub {
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.elegant-desc {
+  font-size: 0.9rem;
+  color: #aaa;
+  margin-top: 8px;
+  line-height: 1.6;
+}
+
+/* Projects */
+.tmpl-elegant-projects {
+  display: grid;
+  gap: 32px;
+}
+
+.tmpl-elegant-project {
+  border: 1px solid rgba(212, 175, 55, 0.15);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: border-color 0.3s;
+}
+
+.tmpl-elegant-project:hover {
+  border-color: rgba(212, 175, 55, 0.4);
+}
+
+.elegant-project-image {
+  height: 200px;
+  overflow: hidden;
+}
+
+.elegant-project-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.elegant-project-content {
+  padding: 24px;
+}
+
+.elegant-project-content h3 {
+  font-size: 1.2rem;
+  color: #fff;
+  margin-bottom: 10px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.elegant-project-content p {
+  font-size: 0.9rem;
+  color: #aaa;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.elegant-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.elegant-tag {
+  font-size: 0.75rem;
+  color: #D4AF37;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  padding: 4px 12px;
+  border-radius: 2px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.elegant-project-link {
+  color: #D4AF37;
+  text-decoration: none;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+}
+
+.elegant-project-link:hover {
+  text-decoration: underline;
+}
+
+/* Education */
+.tmpl-elegant-education {
+  display: grid;
+  gap: 24px;
+}
+
+.elegant-edu-item {
+  display: flex;
+  gap: 16px;
+  padding: 20px;
+  border: 1px solid rgba(212, 175, 55, 0.1);
+  border-radius: 4px;
+}
+
+.elegant-edu-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.elegant-edu-item h4 {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+
+.elegant-edu-inst {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.elegant-edu-meta {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+  font-size: 0.82rem;
+  color: #777;
+}
+
+/* Certifications */
+.tmpl-elegant-certs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.elegant-cert-card {
+  padding: 24px;
+  border: 1px solid rgba(212, 175, 55, 0.15);
+  border-radius: 4px;
+  text-align: center;
+  transition: border-color 0.3s;
+}
+
+.elegant-cert-card:hover {
+  border-color: rgba(212, 175, 55, 0.4);
+}
+
+.elegant-cert-icon {
+  font-size: 1.8rem;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.elegant-cert-card h4 {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+}
+
+.elegant-cert-issuer {
+  font-size: 0.82rem;
+  color: #888;
+}
+
+.elegant-cert-year {
+  font-size: 0.8rem;
+  color: #D4AF37;
+  margin-top: 4px;
+}
+
+.elegant-cert-link {
+  display: inline-block;
+  margin-top: 10px;
+  color: #D4AF37;
+  text-decoration: none;
+  font-size: 0.82rem;
+  letter-spacing: 1px;
+}
+
+/* Contact */
+.tmpl-elegant-contact-info {
+  text-align: center;
+}
+
+.tmpl-elegant-contact-info p {
+  font-size: 0.95rem;
+  color: #ccc;
+  margin-bottom: 10px;
+}
+
+/* Footer */
+.tmpl-elegant-footer {
+  text-align: center;
+  padding: 40px;
+  color: #555;
+  font-size: 0.8rem;
+}
+
+.elegant-footer-diamond {
+  color: #D4AF37;
+  font-size: 0.7rem;
+  margin-bottom: 10px;
+}

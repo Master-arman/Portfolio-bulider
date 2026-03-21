@@ -1,0 +1,28 @@
+{
+  "userId": 1,
+  "fullName": "eree",
+  "professionalTitle": "",
+  "location": "",
+  "email": "",
+  "phone": "rrrrrrrre",
+  "bio": "",
+  "profilePicUrl": "",
+  "github": "",
+  "linkedin": "",
+  "twitter": "",
+  "website": "",
+  "skills": [],
+  "projects": [],
+  "education": [],
+  "experience": [],
+  "certifications": [
+    {
+      "id": 1774061006801,
+      "name": "r4r3",
+      "issuer": "",
+      "year": "",
+      "link": ""
+    }
+  ],
+  "template": "minimal"
+}

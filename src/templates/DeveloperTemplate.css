@@ -1,0 +1,256 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+.tmpl-dev {
+  background: #0d1117;
+  color: #c9d1d9;
+  min-height: 100vh;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+}
+
+/* Terminal Bar */
+.tmpl-dev-terminal-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  background: #161b22;
+  border-bottom: 1px solid #21262d;
+}
+
+.terminal-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.td {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.td-red { background: #ff5f57; }
+.td-yellow { background: #ffbd2e; }
+.td-green { background: #28c840; }
+
+.terminal-title {
+  font-size: 0.8rem;
+  color: #8b949e;
+}
+
+/* Code Colors */
+.code-keyword { color: #ff7b72; }
+.code-var { color: #79c0ff; }
+.code-string { color: #a5d6ff; }
+.code-op { color: #ff7b72; }
+.code-key { color: #d2a8ff; }
+.code-comment { color: #8b949e; }
+
+/* Hero */
+.tmpl-dev-hero {
+  padding: 60px 24px 40px;
+  background: radial-gradient(ellipse at 30% 0%, rgba(6, 214, 160, 0.06) 0%, transparent 50%);
+}
+
+.tmpl-dev-hero-inner {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.tmpl-dev-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 2px solid #06D6A0;
+  margin-bottom: 20px;
+}
+
+.tmpl-dev-avatar-code {
+  font-size: 3rem;
+  color: #06D6A0;
+  margin-bottom: 20px;
+  animation: pulse 2s ease infinite;
+}
+
+.tmpl-dev-greeting,
+.tmpl-dev-field {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  margin: 0;
+}
+
+.tmpl-dev-bio {
+  margin-top: 16px;
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+.tmpl-dev-socials {
+  display: flex;
+  gap: 10px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.dev-social {
+  padding: 5px 14px;
+  background: rgba(6, 214, 160, 0.08);
+  border: 1px solid rgba(6, 214, 160, 0.2);
+  border-radius: 6px;
+  font-size: 0.82rem;
+  color: #06D6A0;
+  transition: all 0.3s;
+}
+
+.dev-social:hover {
+  background: rgba(6, 214, 160, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Sections */
+.tmpl-dev-section {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  border-top: 1px solid #21262d;
+}
+
+.tmpl-dev-section-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 24px;
+  color: #e6edf3;
+}
+
+/* Skills */
+.tmpl-dev-skills {
+  display: grid;
+  gap: 14px;
+}
+
+.tmpl-dev-skill-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.88rem;
+  margin-bottom: 4px;
+}
+
+.tmpl-dev-skill-pct {
+  color: #06D6A0;
+  font-weight: 600;
+}
+
+.tmpl-dev-skill-bar {
+  height: 18px;
+  background: #161b22;
+  border: 1px solid #21262d;
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.45rem;
+  line-height: 18px;
+}
+
+.tmpl-dev-skill-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #06D6A0, #11998e);
+  color: #0d1117;
+  white-space: nowrap;
+  overflow: hidden;
+  letter-spacing: -1px;
+}
+
+.bar-char {
+  opacity: 0.5;
+}
+
+/* Projects */
+.tmpl-dev-projects {
+  display: grid;
+  gap: 16px;
+}
+
+.tmpl-dev-project {
+  background: #161b22;
+  border: 1px solid #21262d;
+  border-radius: 8px;
+  padding: 20px;
+  font-size: 0.92rem;
+  line-height: 1.8;
+  transition: all 0.3s;
+}
+
+.tmpl-dev-project:hover {
+  border-color: rgba(6, 214, 160, 0.3);
+}
+
+.tmpl-dev-project-desc {
+  margin: 0;
+}
+
+.tmpl-dev-project-tech {
+  font-size: 0.88rem;
+}
+
+.tmpl-dev-project-link a {
+  transition: color 0.3s;
+}
+
+.tmpl-dev-project-link a:hover {
+  color: #06D6A0;
+}
+
+.tmpl-dev-project-footer {
+  margin: 0;
+}
+
+/* Education */
+.tmpl-dev-education {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.tmpl-dev-edu {
+  display: flex;
+  gap: 12px;
+}
+
+.tmpl-dev-edu-marker {
+  color: #06D6A0;
+  font-weight: 700;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.tmpl-dev-edu h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.tmpl-dev-edu-inst {
+  font-size: 0.88rem;
+  color: #8b949e;
+  margin-bottom: 4px;
+}
+
+.tmpl-dev-edu-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 0.82rem;
+  color: #6e7681;
+}
+
+/* Contact */
+.tmpl-dev-contact {
+  font-size: 0.95rem;
+  line-height: 2;
+}
+
+/* Footer */
+.tmpl-dev-footer {
+  text-align: center;
+  padding: 40px 24px;
+  border-top: 1px solid #21262d;
+  font-size: 0.85rem;
+}

@@ -1,0 +1,278 @@
+.tmpl-minimal {
+  background: linear-gradient(180deg, #0f0f2e 0%, #1a1a3e 100%);
+  color: #e8e8f5;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Hero */
+.tmpl-minimal-hero {
+  text-align: center;
+  padding: 80px 24px 60px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(108, 99, 255, 0.15) 0%, transparent 60%);
+}
+
+.tmpl-minimal-hero-inner {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.tmpl-minimal-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(108, 99, 255, 0.4);
+  margin-bottom: 20px;
+  box-shadow: 0 0 40px rgba(108, 99, 255, 0.2);
+}
+
+.tmpl-minimal-avatar-placeholder {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6C63FF, #FF6B9D);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-weight: 700;
+  color: white;
+  margin: 0 auto 20px;
+  box-shadow: 0 0 40px rgba(108, 99, 255, 0.2);
+}
+
+.tmpl-minimal-name {
+  font-family: 'Outfit', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, #fff, #c8c8ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.tmpl-minimal-title {
+  font-size: 1.15rem;
+  color: #6C63FF;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.tmpl-minimal-location {
+  font-size: 0.9rem;
+  color: #8888b0;
+  margin-bottom: 16px;
+}
+
+.tmpl-minimal-bio {
+  font-size: 1rem;
+  color: #a0a0c0;
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+.tmpl-minimal-socials {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.social-link {
+  padding: 6px 16px;
+  background: rgba(108, 99, 255, 0.1);
+  border: 1px solid rgba(108, 99, 255, 0.2);
+  border-radius: 999px;
+  font-size: 0.82rem;
+  color: #8B85FF;
+  transition: all 0.3s ease;
+}
+
+.social-link:hover {
+  background: rgba(108, 99, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Sections */
+.tmpl-minimal-section {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+
+.tmpl-minimal-section-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 28px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid rgba(108, 99, 255, 0.2);
+  color: #e8e8f5;
+}
+
+/* Skills */
+.tmpl-minimal-skills {
+  display: grid;
+  gap: 16px;
+}
+
+.tmpl-minimal-skill-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+}
+
+.skill-pct {
+  color: #6C63FF;
+  font-weight: 600;
+}
+
+.tmpl-minimal-skill-bar {
+  height: 8px;
+  background: rgba(108, 99, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.tmpl-minimal-skill-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #6C63FF, #FF6B9D);
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+/* Projects */
+.tmpl-minimal-projects {
+  display: grid;
+  gap: 20px;
+}
+
+.tmpl-minimal-project {
+  background: rgba(26, 26, 62, 0.6);
+  border: 1px solid rgba(108, 99, 255, 0.12);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.tmpl-minimal-project:hover {
+  border-color: rgba(108, 99, 255, 0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.tmpl-minimal-project-img {
+  height: 180px;
+  overflow: hidden;
+}
+
+.tmpl-minimal-project-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tmpl-minimal-project-info {
+  padding: 20px;
+}
+
+.tmpl-minimal-project-info h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.tmpl-minimal-project-info p {
+  font-size: 0.88rem;
+  color: #a0a0c0;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.tmpl-minimal-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.tmpl-minimal-tag {
+  padding: 3px 10px;
+  background: rgba(108, 99, 255, 0.1);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  color: #8B85FF;
+}
+
+.tmpl-minimal-link {
+  font-size: 0.88rem;
+  color: #6C63FF;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.tmpl-minimal-link:hover {
+  color: #FF6B9D;
+}
+
+/* Education */
+.tmpl-minimal-education {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.tmpl-minimal-edu-item {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.tmpl-minimal-edu-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6C63FF, #FF6B9D);
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+
+.tmpl-minimal-edu-item h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.edu-institution {
+  font-size: 0.9rem;
+  color: #a0a0c0;
+  margin-bottom: 4px;
+}
+
+.edu-meta {
+  display: flex;
+  gap: 16px;
+  font-size: 0.82rem;
+  color: #6b6b90;
+}
+
+/* Contact */
+.tmpl-minimal-contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 1rem;
+  color: #a0a0c0;
+}
+
+/* Footer */
+.tmpl-minimal-footer {
+  text-align: center;
+  padding: 40px 24px;
+  color: #6b6b90;
+  font-size: 0.85rem;
+  border-top: 1px solid rgba(108, 99, 255, 0.1);
+}

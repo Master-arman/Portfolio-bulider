@@ -1,0 +1,368 @@
+.tmpl-glass {
+  background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+  color: #e0e0e0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Floating orbs */
+.glass-orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.4;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.glass-orb-1 {
+  width: 400px;
+  height: 400px;
+  background: #00D2FF;
+  top: -100px;
+  right: -100px;
+  animation: floatOrb 8s ease-in-out infinite alternate;
+}
+
+.glass-orb-2 {
+  width: 350px;
+  height: 350px;
+  background: #a855f7;
+  bottom: 10%;
+  left: -80px;
+  animation: floatOrb 10s ease-in-out infinite alternate-reverse;
+}
+
+.glass-orb-3 {
+  width: 250px;
+  height: 250px;
+  background: #06D6A0;
+  top: 50%;
+  right: 10%;
+  animation: floatOrb 12s ease-in-out infinite alternate;
+}
+
+@keyframes floatOrb {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(40px, -40px); }
+}
+
+/* Glass Card */
+.glass-card {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Hero */
+.tmpl-glass-hero {
+  padding: 80px 40px 40px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.glass-hero-card {
+  text-align: center;
+  padding: 48px 40px;
+  max-width: 600px;
+  width: 100%;
+}
+
+.tmpl-glass-avatar {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(0, 210, 255, 0.5);
+  box-shadow: 0 0 40px rgba(0, 210, 255, 0.2);
+  margin-bottom: 20px;
+}
+
+.tmpl-glass-avatar-placeholder {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00D2FF, #a855f7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  color: white;
+  margin: 0 auto 20px;
+  font-weight: bold;
+}
+
+.tmpl-glass-name {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.tmpl-glass-title {
+  font-size: 1.1rem;
+  color: #00D2FF;
+  font-weight: 500;
+}
+
+.tmpl-glass-location {
+  font-size: 0.88rem;
+  color: #aaa;
+  margin-top: 8px;
+}
+
+.tmpl-glass-bio {
+  font-size: 0.92rem;
+  color: #bbb;
+  margin-top: 16px;
+  line-height: 1.7;
+}
+
+.tmpl-glass-socials {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.glass-social-pill {
+  padding: 6px 18px;
+  background: rgba(0, 210, 255, 0.1);
+  border: 1px solid rgba(0, 210, 255, 0.25);
+  border-radius: 50px;
+  color: #00D2FF;
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.glass-social-pill:hover {
+  background: rgba(0, 210, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Sections */
+.tmpl-glass-section {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px;
+  position: relative;
+  z-index: 1;
+}
+
+.tmpl-glass-section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tmpl-glass-section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(0, 210, 255, 0.4), transparent);
+}
+
+/* Skills */
+.tmpl-glass-skills {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.glass-skill-chip {
+  padding: 16px 20px;
+}
+
+.glass-skill-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.glass-skill-bar {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.glass-skill-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00D2FF, #a855f7);
+  border-radius: 3px;
+  transition: width 0.5s ease;
+  position: relative;
+}
+
+.glass-skill-pct {
+  position: absolute;
+  right: 0;
+  top: -20px;
+  font-size: 0.72rem;
+  color: #00D2FF;
+}
+
+/* Items */
+.tmpl-glass-items {
+  display: grid;
+  gap: 16px;
+}
+
+.glass-item {
+  padding: 24px;
+}
+
+.glass-item h4 {
+  font-size: 1.05rem;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.glass-sub {
+  font-size: 0.88rem;
+  color: #aaa;
+}
+
+.glass-meta, .glass-meta-row {
+  font-size: 0.82rem;
+  color: #888;
+  margin-top: 6px;
+}
+
+.glass-meta-row {
+  display: flex;
+  gap: 16px;
+}
+
+.glass-desc {
+  font-size: 0.88rem;
+  color: #bbb;
+  margin-top: 10px;
+  line-height: 1.6;
+}
+
+/* Projects */
+.tmpl-glass-projects {
+  display: grid;
+  gap: 20px;
+}
+
+.glass-project {
+  overflow: hidden;
+}
+
+.glass-project-img {
+  height: 200px;
+  overflow: hidden;
+}
+
+.glass-project-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.glass-project-body {
+  padding: 24px;
+}
+
+.glass-project-body h3 {
+  font-size: 1.2rem;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.glass-project-body p {
+  font-size: 0.88rem;
+  color: #bbb;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.glass-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.glass-tag {
+  font-size: 0.75rem;
+  padding: 4px 14px;
+  background: rgba(0, 210, 255, 0.1);
+  border: 1px solid rgba(0, 210, 255, 0.2);
+  border-radius: 50px;
+  color: #00D2FF;
+}
+
+.glass-link {
+  color: #00D2FF;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.glass-link:hover {
+  text-decoration: underline;
+}
+
+/* Certifications Grid */
+.tmpl-glass-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.glass-cert {
+  padding: 24px;
+  text-align: center;
+}
+
+.glass-cert-icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.glass-cert h4 {
+  font-size: 0.95rem;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+/* Contact */
+.glass-contact {
+  padding: 32px;
+  text-align: center;
+}
+
+.glass-contact p {
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+/* Footer */
+.tmpl-glass-footer {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  font-size: 0.82rem;
+  position: relative;
+  z-index: 1;
+}
