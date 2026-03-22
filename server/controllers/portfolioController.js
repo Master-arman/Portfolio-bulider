@@ -15,20 +15,29 @@ exports.savePortfolio = async (req, res) => {
             return res.status(400).json({ error: "userId is required" });
         }
 
-        // --- Save user data into a unique folder ---
-        const safeName = fullName ? fullName.replace(/[^a-z0-9]/gi, '_').toLowerCase() : 'user';
-        const folderName = `${safeName}_${userId}`;
-        const userFolderPath = path.join(__dirname, '..', 'user_data', folderName);
 
-        // Ensure the directory exists
-        if (!fs.existsSync(userFolderPath)) {
-            fs.mkdirSync(userFolderPath, { recursive: true });
+        // --- Save user data into a unique folder (SKIP on Vercel/Production for performance/read-only) ---
+        let userFolderPath = null;
+        if (!process.env.VERCEL) {
+          try {
+            const safeName = fullName ? fullName.replace(/[^a-z0-9]/gi, '_').toLowerCase() : 'user';
+            const folderName = `${safeName}_${userId}`;
+            userFolderPath = path.join(__dirname, '..', 'user_data', folderName);
+
+            // Ensure the directory exists
+            if (!fs.existsSync(userFolderPath)) {
+                fs.mkdirSync(userFolderPath, { recursive: true });
+            }
+
+            // Write user data to a JSON file in their folder
+            const userDataFile = path.join(userFolderPath, 'portfolio_data.json');
+            fs.writeFileSync(userDataFile, JSON.stringify(req.body, null, 2));
+          } catch (fsErr) {
+            console.warn("⚠️ Local file saving skipped:", fsErr.message);
+          }
         }
-
-        // Write user data to a JSON file in their folder
-        const userDataFile = path.join(userFolderPath, 'portfolio_data.json');
-        fs.writeFileSync(userDataFile, JSON.stringify(req.body, null, 2));
         // -------------------------------------------
+
 
         const portfolioData = {
             fullName,
@@ -118,16 +127,24 @@ exports.deletePortfolio = async (req, res) => {
         // Delete from database
         await Portfolio.destroy({ where: { id: portfolioId } });
         
-        // Delete generated physical folder
-        const safeName = portfolio.fullName ? portfolio.fullName.replace(/[^a-z0-9]/gi, '_').toLowerCase() : 'user';
-        const folderName = `${safeName}_${portfolioUserId}`;
-        const userFolderPath = path.join(__dirname, '..', 'user_data', folderName);
-        
-        if (fs.existsSync(userFolderPath)) {
-            fs.rmSync(userFolderPath, { recursive: true, force: true });
+
+        // Delete generated physical folder (SKIP on Vercel/Production)
+        if (!process.env.VERCEL) {
+          try {
+            const safeName = portfolio.fullName ? portfolio.fullName.replace(/[^a-z0-9]/gi, '_').toLowerCase() : 'user';
+            const folderName = `${safeName}_${portfolioUserId}`;
+            const userFolderPath = path.join(__dirname, '..', 'user_data', folderName);
+            
+            if (fs.existsSync(userFolderPath)) {
+                fs.rmSync(userFolderPath, { recursive: true, force: true });
+            }
+          } catch (fsErr) {
+            console.warn("⚠️ Local folder cleanup skipped:", fsErr.message);
+          }
         }
         
-        console.log(`✅ Portfolio ${portfolioId} deleted from DB and folder cleaned`);
+        console.log(`✅ Portfolio ${portfolioId} deleted from DB`);
+
         res.status(200).json({ message: "Portfolio and physical folder deleted successfully" });
     } catch (err) {
         console.error("Delete Portfolio Error:", err);

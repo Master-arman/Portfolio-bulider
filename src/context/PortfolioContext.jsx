@@ -86,15 +86,18 @@ export function PortfolioProvider({ children }) {
           setPortfolios([formatted]);
           setCurrentPortfolio(formatted);
           setEditingId(formatted.id);
+        } else {
+          console.warn(`⚠️ Backend fetch failed with status: ${res.status}`);
         }
       } catch (err) {
-        console.error('Failed to load portfolio from backend', err);
+        console.error('❌ Failed to load portfolio from backend:', err);
       } finally {
         setLoading(false);
       }
     };
     fetchFromBackend();
   }, [userId]);
+
 
   // Sync to LocalStorage whenever portfolios change
   useEffect(() => {
@@ -211,6 +214,7 @@ export function PortfolioProvider({ children }) {
   }, []);
 
   // Backend Save Logic
+
   const saveToBackend = async (data) => {
     try {
       const response = await fetch(`${API_URL}/portfolio/save-portfolio`, {
@@ -239,17 +243,29 @@ export function PortfolioProvider({ children }) {
           template: data.template || 'minimal'
         }),
       });
-      const result = await response.json();
+
+      // Handle non-OK responses safely
       if (!response.ok) {
-        throw new Error(result.error || 'Failed to save');
+        let errorMessage = `Server error (${response.status})`;
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.error || errorData.message || errorMessage;
+        } catch (jsonErr) {
+          // If response is HTML, this will fail - we just use the default status message
+          console.warn('⚠️ Server returned non-JSON error response');
+        }
+        throw new Error(errorMessage);
       }
-      console.log('✅ Saved to MySQL:', result);
+
+      const result = await response.json();
+      console.log('✅ Saved successfully:', result);
       return result;
     } catch (error) {
-      console.error('❌ Failed to save to MySQL:', error);
+      console.error('❌ Failed to save to backend:', error);
       throw error;
     }
   };
+
 
   const savePortfolio = useCallback(async () => {
     const portfolioToSave = { 
@@ -320,21 +336,26 @@ export function PortfolioProvider({ children }) {
       // Try deleting by portfolio ID first
       let res = await fetch(`${API_URL}/portfolio/${backendId}`, { method: 'DELETE' });
       
-      if (res.ok) {
-        deleteSuccess = true;
-        console.log('✅ Deleted from MySQL by portfolio ID:', backendId);
-      } else {
-        console.warn('⚠️ Delete by portfolio ID failed, trying by userId:', fallbackUserId);
-        // Fallback: try deleting by userId
-        res = await fetch(`${API_URL}/portfolio/${fallbackUserId}`, { method: 'DELETE' });
         if (res.ok) {
           deleteSuccess = true;
-          console.log('✅ Deleted from MySQL by userId:', fallbackUserId);
+          console.log('✅ Deleted from backend by portfolio ID:', backendId);
         } else {
-          const errorData = await res.json();
-          console.error('❌ Backend delete failed:', errorData);
+          console.warn('⚠️ Delete by portfolio ID failed, trying by userId:', fallbackUserId);
+          // Fallback: try deleting by userId
+          res = await fetch(`${API_URL}/portfolio/${fallbackUserId}`, { method: 'DELETE' });
+          if (res.ok) {
+            deleteSuccess = true;
+            console.log('✅ Deleted from backend by userId:', fallbackUserId);
+          } else {
+            console.error('❌ Backend delete failed:', res.status);
+            try {
+              const errorData = await res.json();
+              console.error('❌ Error details:', errorData);
+            } catch (jsonErr) {
+              // Ignore JSON parse errors for non-JSON failure responses
+            }
+          }
         }
-      }
 
       if (deleteSuccess) {
         // Only remove from UI after successful backend deletion

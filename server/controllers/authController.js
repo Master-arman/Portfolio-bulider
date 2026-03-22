@@ -21,33 +21,36 @@ exports.register = async (req, res) => {
     // Create user
     const user = await User.create({ name: name || '', email, password: hashedPassword });
 
-    // --- Create a dedicated folder for the new user and save signup info ---
-    try {
-      const safeName = name ? name.replace(/[^a-z0-9]/gi, '_').toLowerCase() : 'user';
-      const folderName = `${safeName}_${user.id}`;
-      const userFolderPath = path.join(__dirname, '..', 'user_data', folderName);
 
-      // Ensure user_data base folder and the user folder exist
-      if (!fs.existsSync(userFolderPath)) {
-        fs.mkdirSync(userFolderPath, { recursive: true });
+    // --- Create a dedicated folder for the new user and save signup info (SKIP on Vercel/Production) ---
+    if (!process.env.VERCEL) {
+      try {
+        const safeName = name ? name.replace(/[^a-z0-9]/gi, '_').toLowerCase() : 'user';
+        const folderName = `${safeName}_${user.id}`;
+        const userFolderPath = path.join(__dirname, '..', 'user_data', folderName);
+
+        // Ensure user_data base folder and the user folder exist
+        if (!fs.existsSync(userFolderPath)) {
+          fs.mkdirSync(userFolderPath, { recursive: true });
+        }
+
+        // Save user signup info to a JSON file
+        const userInfoFile = path.join(userFolderPath, 'user_info.json');
+        const infoToSave = {
+          userId: user.id,
+          name: name,
+          email: email,
+          signupDate: new Date().toISOString(),
+          status: 'active'
+        };
+        fs.writeFileSync(userInfoFile, JSON.stringify(infoToSave, null, 2));
+        console.log(`📂 Physical folder and info file created for user: ${email}`);
+      } catch (fsErr) {
+        console.error('⚠️ Failed to create user physical folder:', fsErr.message);
       }
-
-      // Save user signup info to a JSON file
-      const userInfoFile = path.join(userFolderPath, 'user_info.json');
-      const infoToSave = {
-        userId: user.id,
-        name: name,
-        email: email,
-        signupDate: new Date().toISOString(),
-        status: 'active'
-      };
-      fs.writeFileSync(userInfoFile, JSON.stringify(infoToSave, null, 2));
-      console.log(`📂 Physical folder and info file created for user: ${email}`);
-    } catch (fsErr) {
-      console.error('⚠️ Failed to create user physical folder:', fsErr.message);
-      // We don't block registration if folder creation fails, but we log it
     }
     // -----------------------------------------------------------------------
+
 
     res.status(201).json({ message: 'User registered successfully', userId: user.id });
   } catch (err) {
