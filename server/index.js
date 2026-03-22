@@ -54,8 +54,20 @@ app.get('/api/sync-db', async (req, res) => {
 });
 
 
+
+// Global Error Handler
+app.use((err, req, res, next) => {
+  console.error("🔥 Global Error:", err);
+  res.status(500).json({ 
+    error: "Internal Server Error", 
+    message: err.message,
+    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined 
+  });
+});
+
 // Support Vercel startup (conditional listen)
 if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+  // Use a simple sync without alter in production if you prefer, but here we keep it safe
   sequelize.sync({ alter: true })
     .then(() => {
       console.log('✅ Database synchronized successfully (with alter).');
@@ -63,6 +75,7 @@ if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
     })
     .catch((err) => console.error('❌ Database sync error:', err));
 }
+
 
 // Export for Vercel Functions
 module.exports = app;
