@@ -4,8 +4,10 @@ require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 
 let sequelize;
 
+
+
 if (process.env.DATABASE_URL) {
-  // Use connection string (Best for Supabase / Render / Vercel)
+  console.log('📡 Using DATABASE_URL for Sequelize...');
   sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect: 'postgres',
     protocol: 'postgres',
@@ -18,7 +20,9 @@ if (process.env.DATABASE_URL) {
     logging: false,
   });
 } else {
-  // Use separate fields (Local development)
+  if (process.env.VERCEL) {
+    console.warn('⚠️ WARNING: DATABASE_URL is missing in Vercel environment! Falling back to local MySQL (which will fail).');
+  }
   sequelize = new Sequelize(
     process.env.DB_NAME,
     process.env.DB_USER,
@@ -30,6 +34,7 @@ if (process.env.DATABASE_URL) {
     }
   );
 }
+
 
 sequelize.authenticate()
   .then(() => console.log(`✅ ${process.env.DATABASE_URL ? 'Cloud PostgreSQL' : 'Local ' + (process.env.DB_DIALECT || 'MySQL')} connected successfully.`))
