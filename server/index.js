@@ -37,10 +37,22 @@ app.get('/', (req, res) => {
     });
 });
 
+
 // Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
+
+// Temporary Database Sync Endpoint (USE ONLY ONCE TO INITIALIZE VERCEL DB)
+app.get('/api/sync-db', async (req, res) => {
+  try {
+    await sequelize.sync({ alter: true });
+    res.json({ status: 'success', message: 'Database synchronized successfully' });
+  } catch (err) {
+    res.status(500).json({ status: 'error', message: err.message });
+  }
+});
+
 
 // Support Vercel startup (conditional listen)
 if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
