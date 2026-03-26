@@ -39,26 +39,18 @@ export function PortfolioProvider({ children }) {
   const [portfolios, setPortfolios] = useState(loadFromLocal());
   const [currentPortfolio, setCurrentPortfolio] = useState({ ...defaultPortfolio });
   const [editingId, setEditingId] = useState(null);
-  const [userId, setUserId] = useState(localStorage.getItem('userId') || null);
   const [loading, setLoading] = useState(false);
-
-  // Fetch from backend once userId is ready
+  // Fetch from backend on load
   useEffect(() => {
-    const storedUserId = localStorage.getItem('userId');
-    if (storedUserId) setUserId(storedUserId);
-
     const fetchFromBackend = async () => {
-      if (!userId) return;
       setLoading(true);
       try {
-        const res = await fetch(`${API_URL}/portfolio/${userId}`);
+        const res = await fetch(`${API_URL}/portfolio`);
         if (res.ok) {
           const dbData = await res.json();
           // Transform DB format back to Context format
           const formatted = {
-            id: dbData.id,           // This is the MySQL auto-increment ID
-            dbId: dbData.id,         // Keep a separate reference to the DB ID
-            userId: dbData.userId,
+            id: dbData.id,
             profile: {
               name: dbData.fullName || '',
               title: dbData.professionalTitle || '',
@@ -86,8 +78,6 @@ export function PortfolioProvider({ children }) {
           setPortfolios([formatted]);
           setCurrentPortfolio(formatted);
           setEditingId(formatted.id);
-        } else {
-          console.warn(`⚠️ Backend fetch failed with status: ${res.status}`);
         }
       } catch (err) {
         console.error('❌ Failed to load portfolio from backend:', err);
@@ -96,7 +86,7 @@ export function PortfolioProvider({ children }) {
       }
     };
     fetchFromBackend();
-  }, [userId]);
+  }, []);
 
 
   // Sync to LocalStorage whenever portfolios change
@@ -223,7 +213,6 @@ export function PortfolioProvider({ children }) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userId: data.userId || userId || 1,
           fullName: data.profile.name,
           professionalTitle: data.profile.title,
           location: data.profile.location,
@@ -270,107 +259,39 @@ export function PortfolioProvider({ children }) {
   const savePortfolio = useCallback(async () => {
     const portfolioToSave = { 
       ...currentPortfolio, 
-      userId,
       updatedAt: new Date().toISOString() 
     };
 
-    // Save to Database FIRST to get the correct MySQL ID
+    // Save to Database
     const result = await saveToBackend(portfolioToSave);
     
-    // Use the MySQL-returned ID as single source of truth
     const dbId = result.portfolio?.id;
     if (dbId) {
       portfolioToSave.id = dbId;
-      portfolioToSave.dbId = dbId;
-    } else {
-      // Fallback: use editingId or generate
-      portfolioToSave.id = editingId || Date.now();
-      portfolioToSave.dbId = editingId || portfolioToSave.id;
     }
 
-    setPortfolios(prev => {
-      // Check if portfolio with same userId OR same dbId already exists
-      // Use String() comparison to avoid type mismatch (string vs number)
-      const existingIdx = prev.findIndex(p => 
-        String(p.userId) === String(userId) || 
-        String(p.dbId) === String(dbId) || 
-        String(p.id) === String(dbId) ||
-        (editingId != null && String(p.id) === String(editingId))
-      );
-      
-      if (existingIdx >= 0) {
-        // UPDATE existing portfolio
-        const updated = [...prev];
-        updated[existingIdx] = portfolioToSave;
-        console.log('✅ Updated existing portfolio at index:', existingIdx);
-        return updated;
-      }
-      // Only create new if truly no match found
-      console.log('✅ Created new portfolio entry');
-      return [...prev, portfolioToSave];
-    });
-
+    setPortfolios([portfolioToSave]); // Keep only this one portfolio
     setCurrentPortfolio({ ...defaultPortfolio });
     setEditingId(null);
-  }, [currentPortfolio, editingId, userId]);
+  }, [currentPortfolio]);
 
-  const deletePortfolio = useCallback(async (id) => {
+  const deletePortfolio = useCallback(async () => {
     try {
-      const portfolioToDelete = portfolios.find(p => p.id === id);
+      // Delete from MySQL
+      const res = await fetch(`${API_URL}/portfolio`, { method: 'DELETE' });
       
-      if (!portfolioToDelete) {
-        console.error('❌ Portfolio not found in local state with id:', id);
-        return;
-      }
-
-      // Try multiple IDs to ensure backend delete works
-      // Priority: dbId > id > userId
-      const backendId = portfolioToDelete.dbId || portfolioToDelete.id || id;
-      const fallbackUserId = portfolioToDelete.userId || userId;
-      
-      console.log('🗑️ Attempting delete - backendId:', backendId, 'userId:', fallbackUserId);
-
-      // Delete from MySQL FIRST, then update UI
-      let deleteSuccess = false;
-      
-      // Try deleting by portfolio ID first
-      let res = await fetch(`${API_URL}/portfolio/${backendId}`, { method: 'DELETE' });
-      
-        if (res.ok) {
-          deleteSuccess = true;
-          console.log('✅ Deleted from backend by portfolio ID:', backendId);
-        } else {
-          console.warn('⚠️ Delete by portfolio ID failed, trying by userId:', fallbackUserId);
-          // Fallback: try deleting by userId
-          res = await fetch(`${API_URL}/portfolio/${fallbackUserId}`, { method: 'DELETE' });
-          if (res.ok) {
-            deleteSuccess = true;
-            console.log('✅ Deleted from backend by userId:', fallbackUserId);
-          } else {
-            console.error('❌ Backend delete failed:', res.status);
-            try {
-              const errorData = await res.json();
-              console.error('❌ Error details:', errorData);
-            } catch (jsonErr) {
-              // Ignore JSON parse errors for non-JSON failure responses
-            }
-          }
-        }
-
-      if (deleteSuccess) {
-        // Only remove from UI after successful backend deletion
-        setPortfolios(prev => prev.filter(p => p.id !== id));
-        // Also clear localStorage
+      if (res.ok) {
+        setPortfolios([]);
+        setCurrentPortfolio({ ...defaultPortfolio });
         localStorage.removeItem('portfolios');
-        console.log('✅ Removed from UI and localStorage');
+        console.log('✅ Portfolio deleted completely');
       } else {
-        alert('Failed to delete portfolio from server. Please try again.');
+        alert('Failed to delete portfolio.');
       }
     } catch (err) {
-      console.error('❌ Failed to delete from backend', err);
-      alert('Error deleting portfolio. Please check your connection and try again.');
+      console.error('❌ Failed to delete:', err);
     }
-  }, [portfolios, userId]);
+  }, []);
 
   const editPortfolio = useCallback((id) => {
     const portfolio = portfolios.find(p => p.id === id);

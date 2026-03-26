@@ -22,6 +22,10 @@ node_modules
 /out
 /build
 
+# User generated data
+/server/user_data
+/server/uploads
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

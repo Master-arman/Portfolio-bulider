@@ -6,38 +6,10 @@ const path = require('path');
 exports.savePortfolio = async (req, res) => {
     try {
         const {
-            userId, fullName, professionalTitle, location, email, phone, bio, profilePicUrl,
+            fullName, professionalTitle, location, email, phone, bio, profilePicUrl,
             github, linkedin, twitter, website,
             skills, projects, education, experience, certifications, template
         } = req.body;
-
-        if (!userId) {
-            return res.status(400).json({ error: "userId is required" });
-        }
-
-
-        // --- Save user data into a unique folder (SKIP on Vercel/Production for performance/read-only) ---
-        let userFolderPath = null;
-        if (!process.env.VERCEL) {
-          try {
-            const safeName = fullName ? fullName.replace(/[^a-z0-9]/gi, '_').toLowerCase() : 'user';
-            const folderName = `${safeName}_${userId}`;
-            userFolderPath = path.join(__dirname, '..', 'user_data', folderName);
-
-            // Ensure the directory exists
-            if (!fs.existsSync(userFolderPath)) {
-                fs.mkdirSync(userFolderPath, { recursive: true });
-            }
-
-            // Write user data to a JSON file in their folder
-            const userDataFile = path.join(userFolderPath, 'portfolio_data.json');
-            fs.writeFileSync(userDataFile, JSON.stringify(req.body, null, 2));
-          } catch (fsErr) {
-            console.warn("⚠️ Local file saving skipped:", fsErr.message);
-          }
-        }
-        // -------------------------------------------
-
 
         const portfolioData = {
             fullName,
@@ -59,28 +31,27 @@ exports.savePortfolio = async (req, res) => {
             template: template || 'minimal'
         };
 
-        // Explicitly check if portfolio already exists for this userId
-        const existingPortfolio = await Portfolio.findOne({ where: { userId } });
+        // Find the first (and only) portfolio or create one
+        let portfolio = await Portfolio.findOne();
         
         let savedPortfolio;
         let created = false;
 
-        if (existingPortfolio) {
-            // UPDATE existing portfolio — don't create a new one!
-            await Portfolio.update(portfolioData, { where: { userId } });
-            savedPortfolio = await Portfolio.findOne({ where: { userId } });
-            console.log(`✅ Portfolio UPDATED for userId: ${userId} (id: ${savedPortfolio.id})`);
+        if (portfolio) {
+            // UPDATE the existing one
+            await portfolio.update(portfolioData);
+            savedPortfolio = portfolio;
+            console.log(`✅ Portfolio UPDATED (id: ${savedPortfolio.id})`);
         } else {
-            // CREATE new portfolio only if none exists for this userId
-            savedPortfolio = await Portfolio.create({ userId, ...portfolioData });
+            // CREATE the very first one
+            savedPortfolio = await Portfolio.create(portfolioData);
             created = true;
-            console.log(`✅ Portfolio CREATED for userId: ${userId} (id: ${savedPortfolio.id})`);
+            console.log(`✅ Portfolio CREATED (id: ${savedPortfolio.id})`);
         }
         
         res.status(200).json({ 
             message: created ? "Portfolio created successfully" : "Portfolio updated successfully",
-            portfolio: savedPortfolio,
-            folderPath: userFolderPath
+            portfolio: savedPortfolio
         });
 
     } catch (err) {
@@ -91,11 +62,11 @@ exports.savePortfolio = async (req, res) => {
 
 exports.getPortfolio = async (req, res) => {
     try {
-        const { userId } = req.params;
-        const portfolio = await Portfolio.findOne({ where: { userId } });
+        // Just return the first portfolio found
+        const portfolio = await Portfolio.findOne();
         
         if (!portfolio) {
-            return res.status(404).json({ error: "Portfolio not found for this user" });
+            return res.status(404).json({ error: "No portfolio found" });
         }
         
         res.status(200).json(portfolio);
@@ -107,45 +78,20 @@ exports.getPortfolio = async (req, res) => {
 
 exports.deletePortfolio = async (req, res) => {
     try {
-        const { id } = req.params;
-        
-        // Try finding by primary key ID first
-        let portfolio = await Portfolio.findByPk(id);
-        
-        // If not found by PK, try by userId (in case frontend sends userId)
-        if (!portfolio) {
-            portfolio = await Portfolio.findOne({ where: { userId: id } });
-        }
+        // Find the first portfolio
+        const portfolio = await Portfolio.findOne();
         
         if (!portfolio) {
-             return res.status(404).json({ error: "Portfolio not found" });
+             return res.status(404).json({ error: "No portfolio found to delete" });
         }
         
         const portfolioId = portfolio.id;
-        const portfolioUserId = portfolio.userId;
         
         // Delete from database
-        await Portfolio.destroy({ where: { id: portfolioId } });
-        
-
-        // Delete generated physical folder (SKIP on Vercel/Production)
-        if (!process.env.VERCEL) {
-          try {
-            const safeName = portfolio.fullName ? portfolio.fullName.replace(/[^a-z0-9]/gi, '_').toLowerCase() : 'user';
-            const folderName = `${safeName}_${portfolioUserId}`;
-            const userFolderPath = path.join(__dirname, '..', 'user_data', folderName);
-            
-            if (fs.existsSync(userFolderPath)) {
-                fs.rmSync(userFolderPath, { recursive: true, force: true });
-            }
-          } catch (fsErr) {
-            console.warn("⚠️ Local folder cleanup skipped:", fsErr.message);
-          }
-        }
+        await portfolio.destroy();
         
         console.log(`✅ Portfolio ${portfolioId} deleted from DB`);
-
-        res.status(200).json({ message: "Portfolio and physical folder deleted successfully" });
+        res.status(200).json({ message: "Portfolio deleted successfully" });
     } catch (err) {
         console.error("Delete Portfolio Error:", err);
         res.status(500).json({ error: "Server error", details: err.message });
@@ -166,13 +112,8 @@ exports.uploadProfilePic = async (req, res) => {
 
 exports.downloadPdf = async (req, res) => {
     try {
-        const { id } = req.params;
-        
-        // Try by PK first, then by userId
-        let portfolio = await Portfolio.findByPk(id);
-        if (!portfolio) {
-            portfolio = await Portfolio.findOne({ where: { userId: id } });
-        }
+        // Just find the single portfolio
+        const portfolio = await Portfolio.findOne();
         
         if (!portfolio) {
             return res.status(404).json({ error: "Portfolio not found" });
