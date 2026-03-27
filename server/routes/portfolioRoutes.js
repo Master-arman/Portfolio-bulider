@@ -5,50 +5,49 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-const cloudinary = require('cloudinary').v2;
-const { CloudinaryStorage } = require('multer-storage-cloudinary');
+// --- LOCAL STORAGE CONFIGURATION ---
+const uploadDir = path.join(__dirname, '..', 'uploads');
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+}
 
-// Configure Cloudinary (Make sure these are in your .env)
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET
-});
-
-// Configure Cloudinary Storage for Multer
-const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
-    folder: 'portfolio_assets',
-    allowed_formats: ['jpg', 'png', 'jpeg', 'webp', 'gif'],
-    transformation: [{ width: 1000, height: 1000, crop: 'limit' }]
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, uploadDir);
   },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, uniqueSuffix + path.extname(file.originalname));
+  }
 });
 
 const upload = multer({ 
   storage: storage,
-  limits: { fileSize: 10 * 1024 * 1024 } // 10MB
+  limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit
 });
 
-// Routes — IMPORTANT: specific routes MUST come before catch-all parameter routes
+// Routes
 router.post('/save-portfolio', portfolioController.savePortfolio);
 router.get('/download-pdf/:id', portfolioController.downloadPdf);
 
 // Local image upload endpoint
-    // Local (actually now Cloudinary) image upload endpoint
 router.post('/upload-image', upload.single('image'), (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ error: 'No image file uploaded' });
     }
-    // Return the Cloudinary secure URL
-    const imageUrl = req.file.path; // CloudinaryStorage stores the URL in req.file.path
+    // Return the local URL path
+    const imageUrl = `/uploads/${req.file.filename}`;
     res.status(200).json({ url: imageUrl });
   } catch (err) {
     console.error('Upload Error:', err);
     res.status(500).json({ error: 'Failed to upload image', details: err.message });
   }
 });
+
+// Root routes (no ID) — used by frontend context
+router.get('/', portfolioController.getPortfolio);
+router.delete('/', portfolioController.deletePortfolio);
 
 // Catch-all parameter routes LAST
 router.get('/:userId', portfolioController.getPortfolio);

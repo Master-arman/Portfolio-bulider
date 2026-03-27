@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
-const sequelize = require('./config/db');
+const { sequelize } = require('./models');
 
 const authRoutes = require('./routes/authRoutes');
 const portfolioRoutes = require('./routes/portfolioRoutes');
@@ -67,13 +67,13 @@ app.use((err, req, res, next) => {
 
 // Support Vercel startup (conditional listen)
 if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
-  // Use a simple sync without alter in production if you prefer, but here we keep it safe
-  sequelize.sync({ alter: true })
+  // Tables are already created by init_db.js — just verify connection then start
+  sequelize.authenticate()
     .then(() => {
-      console.log('✅ Database synchronized successfully (with alter).');
+      console.log('✅ Database connection verified.');
       app.listen(PORT, () => console.log(`🚀 Server is running on: http://localhost:${PORT}`));
     })
-    .catch((err) => console.error('❌ Database sync error:', err));
+    .catch((err) => console.error('❌ Database connection error:', err));
 }
 
 

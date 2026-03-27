@@ -68,11 +68,43 @@ export function PortfolioProvider({ children }) {
               dribbble: '',
               instagram: ''
             },
-            skills: dbData.skills || [],
-            projects: dbData.projects || [],
-            education: dbData.education || [],
-            experience: dbData.experience || [],
-            certifications: dbData.certifications || [],
+            // Map DB column names back to frontend field names
+            skills: (dbData.skills || []).map(s => ({
+              id: s.id || Date.now(),
+              name: s.name,
+              level: s.level || 80,
+            })),
+            projects: (dbData.projects || []).map(p => ({
+              id: p.id || Date.now(),
+              title: p.title,
+              description: p.description,
+              image: p.image_url || p.image || '',
+              link: p.github_link || p.link || '',
+              live_link: p.live_link || '',
+              tech: p.tech || [],
+            })),
+            education: (dbData.education || []).map(e => ({
+              id: e.id || Date.now(),
+              institution: e.school || e.institution || '',
+              degree: e.degree || '',
+              field: e.field || '',
+              year: e.startYear || e.year || '',
+              grade: e.grade || '',
+            })),
+            experience: (dbData.experience || []).map(e => ({
+              id: e.id || Date.now(),
+              role: e.role || '',
+              company: e.company || '',
+              duration: e.duration || '',
+              description: e.description || '',
+              location: e.location || '',
+            })),
+            certifications: (dbData.certifications || []).map(c => ({
+              id: c.id || Date.now(),
+              name: c.name || '',
+              issuer: c.issuer || '',
+              year: c.year || '',
+            })),
             template: dbData.template || 'minimal'
           };
           setPortfolios([formatted]);
@@ -313,7 +345,6 @@ export function PortfolioProvider({ children }) {
     currentPortfolio,
     editingId,
     loading,
-    userId,
     updateProfile,
     updateSocialLinks,
     setTemplate,

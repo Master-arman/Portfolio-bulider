@@ -40,23 +40,6 @@ const Portfolio = sequelize.define('Portfolio', {
   website: {
     type: DataTypes.STRING(500),
   },
-  skills: {
-    type: DataTypes.JSON,
-  },
-  projects: {
-    type: DataTypes.JSON,
-  },
-  education: {
-    type: DataTypes.JSON,
-  },
-  experience: {
-    type: DataTypes.JSON,
-    defaultValue: [],
-  },
-  certifications: {
-    type: DataTypes.JSON,
-    defaultValue: [],
-  },
   template: {
     type: DataTypes.STRING,
     defaultValue: 'minimal',

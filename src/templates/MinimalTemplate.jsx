@@ -1,7 +1,7 @@
 import './MinimalTemplate.css';
 
 export default function MinimalTemplate({ data }) {
-  const { profile, skills, projects, education, socialLinks } = data;
+  const { profile, skills, projects, education, experience, certifications, socialLinks } = data;
 
   return (
     <div className="tmpl-minimal">
@@ -87,6 +87,25 @@ export default function MinimalTemplate({ data }) {
         </section>
       )}
 
+      {/* Experience */}
+      {experience?.length > 0 && (
+        <section className="tmpl-minimal-section">
+          <h2 className="tmpl-minimal-section-title">Experience</h2>
+          <div className="tmpl-minimal-education">
+            {experience.map(exp => (
+              <div key={exp.id} className="tmpl-minimal-edu-item">
+                <div className="tmpl-minimal-edu-dot"></div>
+                <div>
+                  <h4>{exp.role}{exp.company && <span style={{fontWeight:400}}> at {exp.company}</span>}</h4>
+                  {exp.duration && <p className="edu-institution">📅 {exp.duration}</p>}
+                  {exp.description && <p style={{fontSize:'0.85em',marginTop:4}}>{exp.description}</p>}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* Education */}
       {education.length > 0 && (
         <section className="tmpl-minimal-section">
@@ -102,6 +121,25 @@ export default function MinimalTemplate({ data }) {
                     {edu.year && <span>📅 {edu.year}</span>}
                     {edu.grade && <span>⭐ {edu.grade}</span>}
                   </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Certifications */}
+      {certifications?.length > 0 && (
+        <section className="tmpl-minimal-section">
+          <h2 className="tmpl-minimal-section-title">Certifications</h2>
+          <div className="tmpl-minimal-education">
+            {certifications.map(cert => (
+              <div key={cert.id} className="tmpl-minimal-edu-item">
+                <div className="tmpl-minimal-edu-dot"></div>
+                <div>
+                  <h4>🏆 {cert.name}</h4>
+                  {cert.issuer && <p className="edu-institution">{cert.issuer}</p>}
+                  {cert.year && <p style={{fontSize:'0.8em',color:'var(--text-muted,#aaa)'}}>📅 {cert.year}</p>}
                 </div>
               </div>
             ))}

@@ -25,15 +25,11 @@ const templateMap = {
 
 export default function PreviewPage() {
   const { id } = useParams();
-  const { portfolios, userId } = usePortfolio();
+  const { portfolios } = usePortfolio();
   const templateRef = useRef();
 
-  // Try multiple ways to find the portfolio
-  const portfolio = portfolios.find(p => 
-    String(p.id) === String(id) || 
-    String(p.dbId) === String(id) ||
-    String(p.userId) === String(id)
-  );
+  // Find the portfolio by its unique database ID
+  const portfolio = portfolios.find(p => String(p.id) === String(id));
 
   if (!portfolio) {
     return (

@@ -1,7 +1,7 @@
 import './DeveloperTemplate.css';
 
 export default function DeveloperTemplate({ data }) {
-  const { profile, skills, projects, education, socialLinks } = data;
+  const { profile, skills, projects, education, experience, certifications, socialLinks } = data;
 
   return (
     <div className="tmpl-dev">
@@ -144,6 +144,48 @@ export default function DeveloperTemplate({ data }) {
                     {edu.year && <span>{edu.year}</span>}
                     {edu.grade && <span>| {edu.grade}</span>}
                   </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Experience */}
+      {experience?.length > 0 && (
+        <section className="tmpl-dev-section">
+          <h2 className="tmpl-dev-section-title">
+            <span className="code-comment">/**</span> Experience <span className="code-comment">*/</span>
+          </h2>
+          <div className="tmpl-dev-education">
+            {experience.map(exp => (
+              <div key={exp.id} className="tmpl-dev-edu">
+                <div className="tmpl-dev-edu-marker">&gt;</div>
+                <div>
+                  <h4><span className="code-var">{exp.role}</span>{exp.company && <span className="code-comment"> // {exp.company}</span>}</h4>
+                  {exp.duration && <p className="tmpl-dev-edu-inst">{exp.duration}</p>}
+                  {exp.description && <p style={{fontSize:'0.82em',marginTop:4,color:'#aaa'}}>{exp.description}</p>}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Certifications */}
+      {certifications?.length > 0 && (
+        <section className="tmpl-dev-section">
+          <h2 className="tmpl-dev-section-title">
+            <span className="code-comment">/**</span> Certifications <span className="code-comment">*/</span>
+          </h2>
+          <div className="tmpl-dev-education">
+            {certifications.map(cert => (
+              <div key={cert.id} className="tmpl-dev-edu">
+                <div className="tmpl-dev-edu-marker">#</div>
+                <div>
+                  <h4><span className="code-var">{cert.name}</span></h4>
+                  {cert.issuer && <p className="tmpl-dev-edu-inst">{cert.issuer}</p>}
+                  {cert.year && <span className="tmpl-dev-edu-meta">{cert.year}</span>}
                 </div>
               </div>
             ))}

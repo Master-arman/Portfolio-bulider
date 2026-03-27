@@ -1,7 +1,7 @@
 import './CreativeTemplate.css';
 
 export default function CreativeTemplate({ data }) {
-  const { profile, skills, projects, education, socialLinks } = data;
+  const { profile, skills, projects, education, experience, certifications, socialLinks } = data;
 
   return (
     <div className="tmpl-creative">
@@ -122,6 +122,48 @@ export default function CreativeTemplate({ data }) {
                     {edu.year && <span>📅 {edu.year}</span>}
                     {edu.grade && <span>⭐ {edu.grade}</span>}
                   </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Experience */}
+      {experience?.length > 0 && (
+        <section className="tmpl-creative-section">
+          <h2 className="tmpl-creative-section-title">
+            <span className="creative-title-accent">✦</span> Experience
+          </h2>
+          <div className="tmpl-creative-timeline">
+            {experience.map(exp => (
+              <div key={exp.id} className="tmpl-creative-timeline-item">
+                <div className="creative-timeline-dot"></div>
+                <div className="creative-timeline-content">
+                  <h4>{exp.role}{exp.company && <span style={{fontWeight:400}}> at {exp.company}</span>}</h4>
+                  {exp.duration && <p className="creative-timeline-place">📅 {exp.duration}</p>}
+                  {exp.description && <p style={{fontSize:'0.85em',marginTop:4}}>{exp.description}</p>}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Certifications */}
+      {certifications?.length > 0 && (
+        <section className="tmpl-creative-section">
+          <h2 className="tmpl-creative-section-title">
+            <span className="creative-title-accent">✦</span> Certifications
+          </h2>
+          <div className="tmpl-creative-timeline">
+            {certifications.map(cert => (
+              <div key={cert.id} className="tmpl-creative-timeline-item">
+                <div className="creative-timeline-dot"></div>
+                <div className="creative-timeline-content">
+                  <h4>🏆 {cert.name}</h4>
+                  {cert.issuer && <p className="creative-timeline-place">{cert.issuer}</p>}
+                  {cert.year && <span>📅 {cert.year}</span>}
                 </div>
               </div>
             ))}
